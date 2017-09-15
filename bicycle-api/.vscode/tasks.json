@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\Bicycle.csproj"
+                "${workspaceRoot}\\bicycle-api.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

@@ -1,7 +1,9 @@
-namespace BicycleApi.Model
-{
-    public class ApplicationUser
+using Microsoft.AspNetCore.Identity;
+
+namespace BicycleApi.Model {
+    public class ApplicationUser : IdentityUser
     {
-        
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

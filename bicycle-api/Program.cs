@@ -8,12 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace bicycle_api
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
+namespace BicycleApi {
+    public class Program {
+        public static void Main(string[] args) {
             BuildWebHost(args).Run();
         }
 

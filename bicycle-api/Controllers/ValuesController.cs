@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BicycleApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ValuesController : Controller
     {
-        // GET api/values
+        // GET values
         [HttpGet]
         public IEnumerable<string> Get()
         {

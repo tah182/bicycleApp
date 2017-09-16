@@ -15,6 +15,8 @@ using BicycleApi.Model;
 
 namespace BicycleApi {
     public class Startup {
+        private const string corsPolicy = "corsPolicy";
+        
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
@@ -55,6 +57,13 @@ namespace BicycleApi {
                 options.SlidingExpiration = true;
             });
 
+            // CORS
+            services.AddCors(s => s.AddPolicy(corsPolicy, builder => {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             // services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
@@ -66,6 +75,7 @@ namespace BicycleApi {
                 app.UseDeveloperExceptionPage();
             }
             
+            app.UseCors(corsPolicy);
             app.UseAuthentication();
             app.UseMvc();
         }

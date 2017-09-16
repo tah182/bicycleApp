@@ -7,7 +7,10 @@ namespace BicycleApi.Logging {
         public const int UpdateItem = 1004;
         public const int DeleteItem = 1005;
         public const int Login = 2000;
-        public const int CreateUser = 2001;
+        public const int Logout = 2001;
+        public const int CreateUser = 2002;
+
+        public const int AccountLockout = 2002;
         public const int GetItemNotFound = 4000;
         public const int UpdateItemNotFound = 4001;
     }

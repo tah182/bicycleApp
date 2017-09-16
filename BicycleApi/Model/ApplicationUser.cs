@@ -8,6 +8,7 @@ namespace BicycleApi.Model {
         [Required]
         [StringLength(100)]
         public string FirstName { get; set; }
+        
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }

@@ -80,7 +80,7 @@ namespace BicycleApi {
             app.UseAuthentication();
             app.UseMvc();
 
-            loggerFactory.AddElmahIo("b3962ef3867743e49361f4672748fa8e", new Guid("BicycleApi"));
+            loggerFactory.AddElmahIo("b3962ef3867743e49361f4672748fa8e", new Guid());
             var logger = loggerFactory.CreateLogger("elmah.io");
         }
     }

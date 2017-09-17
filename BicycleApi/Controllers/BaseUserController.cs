@@ -14,7 +14,10 @@ namespace BicycleApi.Controllers {
         protected readonly UserManager<ApplicationUser> UserManager;
         protected readonly SignInManager<ApplicationUser> SignInManager;
 
-        public BaseUserController (UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<T> logger) : base(logger) {
+        public BaseUserController (UserManager<ApplicationUser> userManager, 
+                                   SignInManager<ApplicationUser> signInManager, 
+                                   ILogger<T> logger, 
+                                   BicycleContext db) : base(logger, db) {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
         }

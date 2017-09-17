@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Elmah.Io.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +16,7 @@ using BicycleApi.Model;
 
 namespace BicycleApi {
     public class Startup {
-        private const string corsPolicy = "corsPolicy";
+        private string corsPolicy => "corsPolicy";
         
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -70,7 +71,7 @@ namespace BicycleApi {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
@@ -78,6 +79,9 @@ namespace BicycleApi {
             app.UseCors(corsPolicy);
             app.UseAuthentication();
             app.UseMvc();
+
+            loggerFactory.AddElmahIo("b3962ef3867743e49361f4672748fa8e", new Guid("BicycleApi"));
+            var logger = loggerFactory.CreateLogger("elmah.io");
         }
     }
 }

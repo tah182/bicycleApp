@@ -12,7 +12,11 @@ using BicycleApi.Model;
 namespace BicycleApi.Controllers {
     [Route("[controller]")]
     public class AccountController : BaseUserController<AccountController> {
-        public AccountController (UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger) : base(userManager, signInManager, logger) { }
+        public AccountController (UserManager<ApplicationUser> userManager, 
+                                  SignInManager<ApplicationUser> signInManager, 
+                                  ILogger<AccountController> logger, 
+                                  BicycleContext db) : base(userManager, signInManager, logger, db) { }
+        #region Anonymous
 
         [HttpPost]
         [AllowAnonymous]
@@ -60,6 +64,8 @@ namespace BicycleApi.Controllers {
             
             return Unauthorized();
         }
+
+        #endregion
 
         [HttpPost]
         [ValidateAntiForgeryToken]

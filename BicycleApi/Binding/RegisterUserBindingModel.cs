@@ -6,6 +6,7 @@ namespace BicycleApi.Binding {
         [Required]
         public string Password { get; set; }
 
+        [Required]
         public string PasswordConf { get; set; }
     }
 }

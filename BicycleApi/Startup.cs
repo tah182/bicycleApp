@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using BicycleApi.Model;
+using BicycleApi.Service;
 
 namespace BicycleApi {
     public class Startup {
@@ -49,14 +50,14 @@ namespace BicycleApi {
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.ConfigureApplicationCookie(options => {
-                options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromDays(150);
-                // options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
-                // options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
-                // options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
-                options.SlidingExpiration = true;
-            });
+            // services.ConfigureApplicationCookie(options => {
+            //     options.Cookie.HttpOnly = true;
+            //     options.Cookie.Expiration = TimeSpan.FromDays(150);
+            //     options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
+            //     options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
+            //     options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+            //     options.SlidingExpiration = true;
+            // });
 
             // CORS
             services.AddCors(s => s.AddPolicy(corsPolicy, builder => {
@@ -65,7 +66,7 @@ namespace BicycleApi {
                        .AllowAnyHeader();
             }));
 
-            // services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IMessageService, SendGridService>();
 
             services.AddMvc();
         }
@@ -81,6 +82,7 @@ namespace BicycleApi {
             app.UseMvc();
 
             loggerFactory.AddElmahIo("b3962ef3867743e49361f4672748fa8e", new Guid());
+            loggerFactory.AddConsole();
             var logger = loggerFactory.CreateLogger("elmah.io");
         }
     }

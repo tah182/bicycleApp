@@ -8,14 +8,21 @@ using Microsoft.Extensions.Logging;
 using BicycleApi.Binding;
 using BicycleApi.Logging;
 using BicycleApi.Model;
+using BicycleApi.Service;
 
 namespace BicycleApi.Controllers {
     [Route("[controller]")]
     public class AccountController : BaseUserController<AccountController> {
+        private readonly IMessageService MessageService;
+
         public AccountController (UserManager<ApplicationUser> userManager, 
                                   SignInManager<ApplicationUser> signInManager, 
                                   ILogger<AccountController> logger, 
-                                  BicycleContext db) : base(userManager, signInManager, logger, db) { }
+                                  BicycleContext db,
+                                  IMessageService messageService) : base(userManager, signInManager, logger, db) {
+
+            this.MessageService = messageService;
+        }
         #region Anonymous
 
         [HttpPost]
@@ -32,8 +39,7 @@ namespace BicycleApi.Controllers {
             if (result.Result.Succeeded) {
                 //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                await MessageService.SendMessageAsync("fromEmail", model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=>link</a>", true);
                 var userResult = await this.SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: false);
                 return Ok(userResult);
             }

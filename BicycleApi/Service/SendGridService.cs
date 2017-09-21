@@ -1,32 +1,29 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace BicycleApi.Service {
     public class SendGridService : IMessageService {
-        private string smtpHost => "smtp.sendgrid.net";
-        private string _smtpUsername, _smtpPassword;
-        private int? _smtpPort;
-        private string smtpUsername { 
-            get { return this._smtpUsername ?? "defaultUsername"; }
-            set { this._smtpUsername = value; }
-        }
-        private string smtpPassword {
-            get { return this._smtpPassword ?? "defaultPassword"; }
-            set { this._smtpPassword = value; }
-        }
-        private int smtpPort {
-            get { return this._smtpPort ?? 587; }
-        }
+        private readonly string smtpHost, smtpUsername, smtpPassword;
+        private readonly int smtpPort;
 
-        public SendGridService(string smtpUsername = null, string smtpPassword = null, int? smtpPort = null) {
+        public SendGridService(IOptions<ConfigOptions> options) : this(options.Value.SmtpSettings.Username, 
+                                                                       options.Value.SmtpSettings.Password, 
+                                                                       options.Value.SmtpSettings.SmtpHost,
+                                                                       options.Value.SmtpSettings.SmtpPort) { }
+
+        public SendGridService(string smtpUsername, string smtpPassword, string smtpHost, int smtpPort) {
             this.smtpUsername = smtpUsername;
             this.smtpPassword = smtpPassword;
-            this._smtpPort = smtpPort;
+            this.smtpHost = smtpHost;
+            this.smtpPort = smtpPort;
         }
         
         public void SendMessage(string emailFrom, string emailTo, string body, string subject, bool? isHtml = false) {
-            SendMessageAsync(emailFrom, emailTo, body, subject, isHtml).GetAwaiter().GetResult();
+            SendMessageAsync(emailFrom, emailTo, body, subject, isHtml)
+                .GetAwaiter()
+                .GetResult();
         }
 
         public async Task SendMessageAsync(string emailFrom, string emailTo, string body, string subject, bool? isHtml = false) {
@@ -44,7 +41,7 @@ namespace BicycleApi.Service {
                 Port = this.smtpPort
             };
 
-            smtpClient.SendAsync(mailMessage, null);
+            await smtpClient.SendMailAsync(mailMessage);
         }
     }
 }

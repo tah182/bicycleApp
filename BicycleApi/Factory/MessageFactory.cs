@@ -2,8 +2,8 @@ using BicycleApi.Configuration;
 using BicycleApi.Business;
 
 namespace BicycleApi.Factory {
-    public static class MailFactory {
-        public static EmailMessage CreateEmailMessage(string emailTo, string body, string subject, string emailFrom = null, string emailFromName = null, bool isHtml = false) {
+    public static class MessageFactory {
+        public static EmailMessage CreateEmailMessage(string emailTo, string subject, string body, string emailFrom = null, string emailFromName = null, bool isHtml = true) {
             EmailAddress fromEmailAddress = null;
             if (!string.IsNullOrWhiteSpace(emailFrom) && !string.IsNullOrWhiteSpace(emailFromName))
                 fromEmailAddress = new EmailAddress { Address = emailFrom, SimpleName = emailFromName };

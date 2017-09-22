@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BicycleApi.Binding;
+using BicycleApi.Factory;
 using BicycleApi.Logging;
 using BicycleApi.Model;
 using BicycleApi.Service;
@@ -26,6 +27,7 @@ namespace BicycleApi.Controllers {
         #region Anonymous
 
         [HttpPost]
+        [Route("register")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] RegisterUserBindingModel model) {
@@ -39,7 +41,8 @@ namespace BicycleApi.Controllers {
             if (result.Result.Succeeded) {
                 //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                await EmailService.SendEmailAsync("fromEmail", model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=>link</a>", true);
+                var emailMessage = MessageFactory.CreateEmailMessage(model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=>link</a>");
+                await EmailService.SendEmailAsync(emailMessage);
                 var userResult = await this.SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: false);
                 return Ok(userResult);
             }
@@ -49,6 +52,7 @@ namespace BicycleApi.Controllers {
         }
 
         [HttpPost]
+        [Route("login")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginUserBindingModel model) {
@@ -71,9 +75,18 @@ namespace BicycleApi.Controllers {
             return Unauthorized();
         }
 
+        [HttpPost]
+        [Route("forgotpassword")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword() {
+            return Ok();
+        }
+
         #endregion
 
         [HttpPost]
+        [Route("logout")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout() {
             await this.SignInManager.SignOutAsync();

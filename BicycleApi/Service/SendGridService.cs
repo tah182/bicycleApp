@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
@@ -35,21 +36,8 @@ namespace BicycleApi.Service
             var msg = SendGrid.Helpers.Mail.MailHelper.CreateSingleEmail(from, to, emailMessage.Subject, plainTextContent, emailMessage.Body);
             var response = await client.SendEmailAsync(msg);
             
-            switch (response.StatusCode) {
-                case 400:
-                    throw new Exception("Bad Request");
-                case 401:
-                    throw new Exception("Requires Authentication");
-                case 406:
-                    throw new Exception("Missing Accept header. example: Accept: application/json");
-                case 429:
-                    throw new Exception("Too Many Requests");
-                case 500:
-                    throw new Exception("Internal Service Error");
-                case 201:   // successfully created
-                case 204:   // successfully deleted
-                    break;
-            }
+            if (response.StatusCode != HttpStatusCode.OK || response.StatusCode != HttpStatusCode.Created || response.StatusCode != HttpStatusCode.NoContent)
+                throw new HttpListenerException((int)response.StatusCode);
         }
     }
 }

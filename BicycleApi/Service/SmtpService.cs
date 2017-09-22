@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using BicycleApi.Business;
 using BicycleApi.Configuration;
 
 namespace BicycleApi.Service {
@@ -20,19 +21,19 @@ namespace BicycleApi.Service {
             this.smtpPort = smtpPort;
         }
 
-        public void SendEmail(string emailTo, string body, string subject, string emailFrom = null, bool? isHtml = false) {
-            SendEmailAsync(emailTo, body, subject, emailFrom, isHtml)
+        public void SendEmail(EmailMessage emailMessage) {
+            SendEmailAsync(emailMessage)
                 .GetAwaiter()
                 .GetResult();
         }
 
-        public async Task SendEmailAsync(string emailTo, string body, string subject, string emailFrom = null, bool? isHtml = false) {
+        public async Task SendEmailAsync(EmailMessage emailMessage) {
             var mailMessage = new MailMessage {
-                From = new MailAddress(emailFrom ?? defaultEmailFrom.Address, defaultEmailFrom.SimpleName),
-                Subject = subject,
-                Body = body,
+                From = new MailAddress(emailMessage.EmailFrom?.Address ?? defaultEmailFrom.Address, defaultEmailFrom.SimpleName),
+                Subject = emailMessage.Subject,
+                Body = emailMessage.Body
             };
-            mailMessage.To.Add(emailTo);
+            mailMessage.To.Add(emailMessage.EmailTo);
 
             var smtpClient = new SmtpClient {
                 Credentials = new NetworkCredential(this.smtpUsername, this.smtpPassword),

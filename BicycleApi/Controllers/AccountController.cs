@@ -13,15 +13,15 @@ using BicycleApi.Service;
 namespace BicycleApi.Controllers {
     [Route("[controller]")]
     public class AccountController : BaseUserController<AccountController> {
-        private readonly IMessageService MessageService;
+        private readonly IEmailService EmailService;
 
         public AccountController (UserManager<ApplicationUser> userManager, 
                                   SignInManager<ApplicationUser> signInManager, 
                                   ILogger<AccountController> logger, 
                                   BicycleContext db,
-                                  IMessageService messageService) : base(userManager, signInManager, logger, db) {
+                                  IEmailService emailService) : base(userManager, signInManager, logger, db) {
 
-            this.MessageService = messageService;
+            this.EmailService = emailService;
         }
         #region Anonymous
 
@@ -39,7 +39,7 @@ namespace BicycleApi.Controllers {
             if (result.Result.Succeeded) {
                 //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                await MessageService.SendMessageAsync("fromEmail", model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=>link</a>", true);
+                await EmailService.SendEmailAsync("fromEmail", model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=>link</a>", true);
                 var userResult = await this.SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: false);
                 return Ok(userResult);
             }

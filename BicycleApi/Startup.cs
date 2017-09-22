@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using BicycleApi.Configuration;
 using BicycleApi.Model;
 using BicycleApi.Service;
 
@@ -33,13 +34,13 @@ namespace BicycleApi {
         }
 
         public void ConfigureDevelopmentServices(IServiceCollection services) {
-            services.AddTransient<IMessageService, SmtpService>();
+            services.AddTransient<IEmailService, SmtpService>();
 
             ConfigureCommonServices(services);
         }
 
         public void ConfigureProductionServices(IServiceCollection services) {
-            services.AddTransient<IMessageService, SendGridService>();
+            services.AddTransient<IEmailService, SendGridService>();
 
             ConfigureCommonServices(services);
         }
@@ -48,6 +49,7 @@ namespace BicycleApi {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
+                loggerFactory.AddConsole();
             }
             
             app.UseCors(corsPolicy);
@@ -55,7 +57,6 @@ namespace BicycleApi {
             app.UseMvc();
 
             loggerFactory.AddElmahIo("b3962ef3867743e49361f4672748fa8e", new Guid());
-            loggerFactory.AddConsole();
             var logger = loggerFactory.CreateLogger("elmah.io");
         }
 

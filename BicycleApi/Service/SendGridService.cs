@@ -1,47 +1,38 @@
-using System.Net;
-using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers;
+using BicycleApi.Configuration;
 
-namespace BicycleApi.Service {
-    public class SendGridService : IMessageService {
-        private readonly string smtpHost, smtpUsername, smtpPassword;
-        private readonly int smtpPort;
+namespace BicycleApi.Service
+{
+    public class SendGridService : IEmailService {
+        private readonly EmailAddress defaultEmailFrom;
+        private readonly string apiKey;
 
-        public SendGridService(IOptions<ConfigOptions> options) : this(options.Value.SmtpSettings.Username, 
-                                                                       options.Value.SmtpSettings.Password, 
-                                                                       options.Value.SmtpSettings.SmtpHost,
-                                                                       options.Value.SmtpSettings.SmtpPort) { }
+        public SendGridService(IOptions<SmtpSettings> options) : this(options.Value.ApiKey, options.Value.DefaultEmailFrom) { }
 
-        public SendGridService(string smtpUsername, string smtpPassword, string smtpHost, int smtpPort) {
-            this.smtpUsername = smtpUsername;
-            this.smtpPassword = smtpPassword;
-            this.smtpHost = smtpHost;
-            this.smtpPort = smtpPort;
+        public SendGridService(string apiKey, EmailAddress defaultEmailFrom) {
+            this.apiKey = apiKey;
+            this.defaultEmailFrom = defaultEmailFrom;
         }
         
-        public void SendMessage(string emailFrom, string emailTo, string body, string subject, bool? isHtml = false) {
-            SendMessageAsync(emailFrom, emailTo, body, subject, isHtml)
+        public void SendEmail(string emailTo, string body, string subject, string emailFrom = null, bool? isHtml = false) {
+            SendEmailAsync(emailTo, body, subject, emailFrom, isHtml)
                 .GetAwaiter()
                 .GetResult();
         }
 
-        public async Task SendMessageAsync(string emailFrom, string emailTo, string body, string subject, bool? isHtml = false) {
-
-            var mailMessage = new MailMessage {
-                From = new MailAddress(emailFrom),
-                Subject = subject,
-                Body = body,
-            };
-            mailMessage.To.Add(emailTo);
-
-            var smtpClient = new SmtpClient {
-                Credentials = new NetworkCredential(this.smtpUsername, this.smtpPassword),
-                Host = this.smtpHost,
-                Port = this.smtpPort
-            };
-
-            await smtpClient.SendMailAsync(mailMessage);
+        public async Task SendEmailAsync(string emailTo, string body, string subject, string emailFrom = null, bool? isHtml = false) {
+            var client = new SendGridClient(apiKey);
+            var from = new SendGrid.Helpers.Mail.EmailAddress(emailFrom ?? defaultEmailFrom.Address, defaultEmailFrom.SimpleName);
+            var to = new SendGrid.Helpers.Mail.EmailAddress(emailTo);
+            var plainTextContent = Regex.Replace(body, "<[^>]*>", "");
+            var msg = SendGrid.Helpers.Mail.MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, body);
+            var response = await client.SendEmailAsync(msg);
+            
         }
     }
 }

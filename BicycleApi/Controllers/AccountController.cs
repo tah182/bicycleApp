@@ -44,10 +44,12 @@ namespace BicycleApi.Controllers {
                 var emailMessage = MessageFactory.CreateEmailMessage(model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=>link</a>");
                 await EmailService.SendEmailAsync(emailMessage);
                 var userResult = await this.SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: false);
+
+                this.Logger.LogInformation(LoggingEvents.CreateUser, $"New user created: {model.UserName}, email: {model.Email}.");
                 return Ok(userResult);
             }
 
-            this.Logger.LogError(LoggingEvents.CreateUser, "Unable to create user: {userName}, email: {email}", model.UserName, model.Email);
+            this.Logger.LogError(LoggingEvents.CreateUser, $"Unable to create user: {model.UserName}, email: {model.Email}.");
             return BadRequest("Unable to create account, please try again.");
         }
 
@@ -59,7 +61,7 @@ namespace BicycleApi.Controllers {
             var loginResult = await this.SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
             
             if (loginResult.Succeeded) {
-                this.Logger.LogInformation(LoggingEvents.Login, "User logged in: {username}", model.UserName);
+                this.Logger.LogInformation(LoggingEvents.Login, $"User logged in: {model.UserName}.");
                 return Ok();
             }
             
@@ -68,7 +70,7 @@ namespace BicycleApi.Controllers {
             // }
 
             if (loginResult.IsLockedOut) {
-                this.Logger.LogWarning(LoggingEvents.AccountLockout, "User {username} account locked out.", model.UserName);
+                this.Logger.LogWarning(LoggingEvents.AccountLockout, "User {model.UserName} account locked out.");
                 return Ok("Lockedout");
             } 
             

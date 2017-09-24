@@ -82,14 +82,29 @@ namespace BicycleApi {
                 options.User.RequireUniqueEmail = true;
             });
 
-            // services.ConfigureApplicationCookie(options => {
-            //     options.Cookie.HttpOnly = true;
-            //     options.Cookie.Expiration = TimeSpan.FromDays(150);
-            //     options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
-            //     options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
-            //     options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
-            //     options.SlidingExpiration = true;
-            // });
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.Expiration = TimeSpan.FromDays(30);
+                // options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
+                // options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
+                // options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+                options.SlidingExpiration = true;
+            });
+
+            // Third Party Authentication
+            services.AddAuthentication()
+                    .AddFacebook(options => {
+                        options.AppId = Configuration["Auth:Facebook:AppId"];
+                        options.AppSecret = Configuration["Auth:Facebook:AppSecret"];
+                        // options.Fields = ["birthday", "email", "first_name", "last_name", "gender", "name_format", "picture"];
+                    })
+                    .AddGoogle(options => {
+                        options.ClientId = Configuration["Auth:Google:ClientId"];
+                        options.ClientSecret = Configuration["Auth:Google:ClientSecret"];
+                    })
+                    .AddTwitter(options => {
+                        options.ConsumerKey = Configuration["Auth:Twitter:ConsumerKey"];
+                        options.ConsumerSecret = Configuration["Auth:Twitter:ConsumerSecret"];
+                    });
 
             // CORS
             services.AddCors(s => s.AddPolicy(corsPolicy, builder => {
@@ -101,6 +116,7 @@ namespace BicycleApi {
             // Config section
             services.Configure<SmtpSettings>(Configuration.GetSection("SmsSettings"));
 
+            // AddMvc Must always be last in the pipeline
             services.AddMvc();
         }
     }

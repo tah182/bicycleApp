@@ -34,5 +34,8 @@
     "@ionic/app-scripts": "2.1.4",
     "typescript": "2.3.4"
   },
-  "description": "An Ionic project"
+  "description": "Bit-cycle ionic project",
+  "config": {
+    "ionic_source_map": "source-map"
+  }
 }

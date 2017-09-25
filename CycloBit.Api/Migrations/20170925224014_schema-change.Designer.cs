@@ -11,9 +11,10 @@ using System;
 namespace CycloBit.Api.Migrations
 {
     [DbContext(typeof(CycloBitContext))]
-    partial class BicycleContextModelSnapshot : ModelSnapshot
+    [Migration("20170925224014_schema-change")]
+    partial class schemachange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

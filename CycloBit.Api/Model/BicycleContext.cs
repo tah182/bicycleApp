@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 namespace CycloBit.Api.Model {
-    public class CycloBitContext : DbContext {
+    public class CycloBitContext : IdentityDbContext<ApplicationUser> {
 
         public CycloBitContext(DbContextOptions<CycloBitContext> options) : base(options) { }
         
@@ -22,26 +23,28 @@ namespace CycloBit.Api.Model {
             builder.HasDefaultSchema("CycloBit");
             builder.RemovePluralizingTableNameConvention();
 
-            builder.Entity<ApplicationUser>()
-                .HasMany(e => e.Claims)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+            base.OnModelCreating(builder);
 
             builder.Entity<ApplicationUser>()
-                .HasMany(e => e.Logins)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                   .HasMany(e => e.Claims) 
+                   .WithOne()
+                   .HasForeignKey(e => e.UserId)
+                   .IsRequired()
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ApplicationUser>()
-                .HasMany(e => e.Roles)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                   .HasMany(e => e.Logins)
+                   .WithOne()
+                   .HasForeignKey(e => e.UserId)
+                   .IsRequired()
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>()
+                   .HasMany(e => e.Roles)
+                   .WithOne()
+                   .HasForeignKey(e => e.UserId)
+                   .IsRequired()
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 

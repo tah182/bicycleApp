@@ -1,0 +1,10 @@
+/Users/tah1/git/bicycleApp/CycloBit.Common/bin/Debug/netcoreapp2.0/CycloBit.Common.deps.json
+/Users/tah1/git/bicycleApp/CycloBit.Common/bin/Debug/netcoreapp2.0/CycloBit.Common.runtimeconfig.json
+/Users/tah1/git/bicycleApp/CycloBit.Common/bin/Debug/netcoreapp2.0/CycloBit.Common.runtimeconfig.dev.json
+/Users/tah1/git/bicycleApp/CycloBit.Common/bin/Debug/netcoreapp2.0/CycloBit.Common.dll
+/Users/tah1/git/bicycleApp/CycloBit.Common/bin/Debug/netcoreapp2.0/CycloBit.Common.pdb
+/Users/tah1/git/bicycleApp/CycloBit.Common/obj/Debug/netcoreapp2.0/CycloBit.Common.csproj.CoreCompileInputs.cache
+/Users/tah1/git/bicycleApp/CycloBit.Common/obj/Debug/netcoreapp2.0/CycloBit.Common.AssemblyInfoInputs.cache
+/Users/tah1/git/bicycleApp/CycloBit.Common/obj/Debug/netcoreapp2.0/CycloBit.Common.AssemblyInfo.cs
+/Users/tah1/git/bicycleApp/CycloBit.Common/obj/Debug/netcoreapp2.0/CycloBit.Common.dll
+/Users/tah1/git/bicycleApp/CycloBit.Common/obj/Debug/netcoreapp2.0/CycloBit.Common.pdb

@@ -2,9 +2,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using CycloBit.Common.Conversion;
 
 namespace CycloBit.Api.Model {
     public class MedicalDetials {
+        private FeetInches feetInches = null;
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
@@ -18,6 +21,19 @@ namespace CycloBit.Api.Model {
         public int HeightCm { get; set; }
 
         public int WeightKg { get; set; }
+
+        public FeetInches FeetInches { 
+            get {
+                if (feetInches == null)
+                    feetInches = new FeetInches(HeightCm.ConvertCentimetersToInches());
+
+                return feetInches;
+            }
+        }
+
+        public double WeightLb {
+            get { return WeightKg.ConvertKgtoLb(); }
+        }
 
         public int? AgeYears { 
             get {

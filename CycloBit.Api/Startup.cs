@@ -13,8 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using CycloBit.Api.Configuration;
-using CycloBit.Api.Model;
 using CycloBit.Api.Service;
+using CycloBit.Model;
+using CycloBit.Model.Entities;
 
 namespace CycloBit.Api {
     public class Startup {

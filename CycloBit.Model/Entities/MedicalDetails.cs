@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using CycloBit.Common.Conversion;
 
-namespace CycloBit.Api.Model {
+namespace CycloBit.Model.Entities {
     public class MedicalDetials {
         private FeetInches feetInches = null;
 

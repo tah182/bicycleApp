@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using CycloBit.Api.Model;
+using CycloBit.Model.Entities;
 
 namespace CycloBit.Api.Binding {
     public class RegisterUserBindingModel : ApplicationUser {

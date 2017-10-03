@@ -8,8 +8,9 @@ using Microsoft.Extensions.Logging;
 using CycloBit.Api.Binding;
 using CycloBit.Api.Factory;
 using CycloBit.Api.Logging;
-using CycloBit.Api.Model;
 using CycloBit.Api.Service;
+using CycloBit.Model;
+using CycloBit.Model.Entities;
 
 namespace CycloBit.Api.Controllers {
     [Route("[controller]")]

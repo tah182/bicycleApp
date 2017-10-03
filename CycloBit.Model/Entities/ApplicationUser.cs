@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace CycloBit.Api.Model {
+namespace CycloBit.Model.Entities {
     public class ApplicationUser : IdentityUser {
         [Required]
         [StringLength(100)]

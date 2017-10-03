@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace CycloBit.Api.Migrations
+namespace CycloBit.Model.Migrations
 {
     public partial class schemachange : Migration
     {

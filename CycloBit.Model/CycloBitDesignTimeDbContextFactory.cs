@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 
-namespace CycloBit.Api.Model {
+namespace CycloBit.Model {
     public class CycloBitDesignTimeDbContextFactory : IDesignTimeDbContextFactory<CycloBitContext> {
         public CycloBitContext CreateDbContext(string[] args) {
             var builder = new DbContextOptionsBuilder<CycloBitContext>();

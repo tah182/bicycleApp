@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CycloBit.Api.Attributes;
-using CycloBit.Api.Model;
+using CycloBit.Model;
 
 namespace CycloBit.Api.Controllers {
     [ValidateModel]

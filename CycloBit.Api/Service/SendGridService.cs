@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers;
-using CycloBit.Api.Business;
+using CycloBit.Api.Model;
 using CycloBit.Api.Configuration;
 
 namespace CycloBit.Api.Service

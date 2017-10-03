@@ -1,5 +1,5 @@
 using CycloBit.Api.Configuration;
-using CycloBit.Api.Business;
+using CycloBit.Api.Model;
 
 namespace CycloBit.Api.Factory {
     public static class MessageFactory {

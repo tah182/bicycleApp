@@ -15,7 +15,7 @@ namespace CycloBit.Model {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{environmentName}.json", optional: false, reloadOnChange: false)
+                .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: false)
                 .Build();
 
             builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));

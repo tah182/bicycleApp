@@ -2,7 +2,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using CycloBit.Api.Business;
+using CycloBit.Api.Model;
 using CycloBit.Api.Configuration;
 
 namespace CycloBit.Api.Service {

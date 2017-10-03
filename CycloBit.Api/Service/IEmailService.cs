@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using CycloBit.Api.Business;
+using CycloBit.Api.Model;
 
 namespace CycloBit.Api.Service {
     public interface IEmailService

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using CycloBit.Api.Configuration;
 
-namespace CycloBit.Api.Business {
+namespace CycloBit.Api.Model {
     public class EmailMessage {
         private bool isHtml = false;
 

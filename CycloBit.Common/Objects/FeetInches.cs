@@ -2,9 +2,11 @@ using System;
 
 namespace CycloBit.Common.Objects {
     public class FeetInches {
+        private int inchesInFeet => 12;
+
         public FeetInches(int inches) {
-            this.Foot = (int)(inches / 12);
-            this.Inch = inches % 12;
+            this.Foot = (int)(inches / inchesInFeet);
+            this.Inch = inches % inchesInFeet;
         }
 
         public FeetInches() { }
@@ -14,7 +16,7 @@ namespace CycloBit.Common.Objects {
         public int Inch { get; set; }
 
         public int ToInches() {
-            return this.Foot * 12 + this.Inch;
+            return this.Foot * inchesInFeet + this.Inch;
         }
 
         public int ToCentimeters() {

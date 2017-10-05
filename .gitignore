@@ -1,0 +1,9 @@
+bin/
+obj
+CycloBit.Api/bin/
+CycloBit.Api/obj
+CycloBit.Common/bin/
+CycloBit.Common/obj
+CycloBit.Model/bin/
+CycloBit.Model/obj
+project.lock.json

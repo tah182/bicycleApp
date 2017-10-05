@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elmah.Io.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using CycloBit.Api.Configuration;
 using CycloBit.Api.Service;
 using CycloBit.Model;
@@ -83,16 +85,41 @@ namespace CycloBit.Api {
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.ConfigureApplicationCookie(options => {
-                options.Cookie.Expiration = TimeSpan.FromDays(30);
-                // options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
-                // options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
-                // options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
-                options.SlidingExpiration = true;
-            });
+            // if forever reason we want to allow cookies
+            // services.ConfigureApplicationCookie(options => {
+            //     options.Cookie.Expiration = TimeSpan.FromDays(30);
+            //     // options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
+            //     // options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
+            //     // options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+            //     options.SlidingExpiration = true;
+            // });
 
             // Third Party Authentication
             services.AddAuthentication()
+                    .AddJwtBearer(options => {
+                        options.RequireHttpsMetadata = false;
+                        options.SaveToken = true;
+                        
+                        options.TokenValidationParameters = new TokenValidationParameters {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = Configuration["Auth:Token:Issuer"],
+                            ValidAudience = Configuration["Auth:Token:Issuer"],
+                            IssuerSigningKey = JwtSecurityKey.Create(Configuration["Auth:Token:Key"])
+                        };
+
+                        options.Events = new JwtBearerEvents {
+                            OnAuthenticationFailed = context => {
+                                Console.WriteLine("OnAuthenticationFailed: " + context.Exception.Message);
+                                return Task.CompletedTask;
+                            }, OnTokenValidated = context => {
+                                Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
+                                return Task.CompletedTask;
+                            }
+                        };
+                    })
                     .AddFacebook(options => {
                         options.AppId = Configuration["Auth:Facebook:AppId"];
                         options.AppSecret = Configuration["Auth:Facebook:AppSecret"];

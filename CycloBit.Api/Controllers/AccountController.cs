@@ -41,7 +41,6 @@ namespace CycloBit.Api.Controllers {
 
             if (result.Result.Succeeded) {
                 //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 var emailMessage = MessageFactory.CreateEmailMessage(model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=>link</a>");
                 await EmailService.SendEmailAsync(emailMessage);
                 var userResult = await this.SignInManager.PasswordSignInAsync(model.UserName, model.Password, false, lockoutOnFailure: false);

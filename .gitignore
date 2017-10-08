@@ -1,3 +1,5 @@
+*.dll
+*.cache
 bin/
 obj
 CycloBit.Api/bin/

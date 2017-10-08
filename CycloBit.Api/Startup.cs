@@ -109,16 +109,6 @@ namespace CycloBit.Api {
                             ValidAudience = Configuration["Auth:Token:Issuer"],
                             IssuerSigningKey = JwtSecurityKey.Create(Configuration["Auth:Token:Key"])
                         };
-
-                        options.Events = new JwtBearerEvents {
-                            OnAuthenticationFailed = context => {
-                                Console.WriteLine("OnAuthenticationFailed: " + context.Exception.Message);
-                                return Task.CompletedTask;
-                            }, OnTokenValidated = context => {
-                                Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
-                                return Task.CompletedTask;
-                            }
-                        };
                     })
                     .AddFacebook(options => {
                         options.AppId = Configuration["Auth:Facebook:AppId"];

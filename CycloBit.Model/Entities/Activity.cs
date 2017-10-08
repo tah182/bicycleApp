@@ -1,5 +1,6 @@
 namespace CycloBit.Model.Entities {
-    public class Movement {
+    public class Activity {
+        
         
     }
 }

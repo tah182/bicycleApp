@@ -16,10 +16,14 @@ namespace CycloBit.Model.Entities {
         [Required]
         [Phone]
         public string ContactPhone { get; set; }
+
+        public string ProfilePhotoUrl { get; set; }
         
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateOfBirth { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime CreateDate { get; set; }
 
         /// <summary>
         /// Navigation property for the roles this user belongs to.

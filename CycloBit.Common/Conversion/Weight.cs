@@ -1,6 +1,6 @@
 namespace CycloBit.Common.Conversion
 {
-    public static partial class Weight {
+    public static class Weight {
         private static double kgToLb => 2.20462;
 
         public static double ConvertKgtoLb(this int kg) {

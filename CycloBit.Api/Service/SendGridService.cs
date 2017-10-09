@@ -1,11 +1,8 @@
-using System;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using SendGrid;
-using SendGrid.Helpers;
 using CycloBit.Api.Model;
 using CycloBit.Api.Configuration;
 

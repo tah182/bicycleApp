@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using CycloBit.Common;
 
 namespace CycloBit.Model.Entities {
     [ComplexType]

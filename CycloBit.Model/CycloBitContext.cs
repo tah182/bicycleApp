@@ -1,19 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using CycloBit.Model.Entities;
 
-namespace CycloBit.Model {
+namespace CycloBit.Model
+{
     public class CycloBitContext : IdentityDbContext<ApplicationUser> {
 
         public CycloBitContext(DbContextOptions<CycloBitContext> options) : base(options) { }

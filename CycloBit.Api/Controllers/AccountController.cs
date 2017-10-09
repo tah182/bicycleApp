@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +10,8 @@ using CycloBit.Api.Service;
 using CycloBit.Model;
 using CycloBit.Model.Entities;
 
-namespace CycloBit.Api.Controllers {
+namespace CycloBit.Api.Controllers
+{
     [Route("[controller]")]
     public class AccountController : BaseUserController<AccountController> {
         private readonly IEmailService EmailService;

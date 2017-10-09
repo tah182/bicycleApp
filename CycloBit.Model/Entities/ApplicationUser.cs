@@ -19,10 +19,10 @@ namespace CycloBit.Model.Entities {
 
         public string ProfilePhotoUrl { get; set; }
         
-        [DataType(DataType.Date)]
+        [DataType(dataType: DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(dataType: DataType.Date)]
         public DateTime CreateDate { get; set; }
 
         /// <summary>

@@ -1,13 +1,11 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CycloBit.Model;
 using CycloBit.Model.Entities;
 
-namespace CycloBit.Api.Controllers {
+namespace CycloBit.Api.Controllers
+{
 
     [Authorize]
     public abstract class BaseUserController<T> : BaseController<T> {

@@ -1,5 +1,6 @@
 *.dll
 *.cache
+*.pdb
 bin/
 obj
 CycloBit.Api/bin/

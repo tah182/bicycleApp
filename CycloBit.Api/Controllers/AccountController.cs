@@ -10,20 +10,16 @@ using CycloBit.Api.Service;
 using CycloBit.Model;
 using CycloBit.Model.Entities;
 
-namespace CycloBit.Api.Controllers
-{
+namespace CycloBit.Api.Controllers {
     [Route("[controller]")]
     public class AccountController : BaseUserController<AccountController> {
         private readonly IEmailService EmailService;
 
-        public AccountController (UserManager<ApplicationUser> userManager, 
-                                  SignInManager<ApplicationUser> signInManager, 
-                                  ILogger<AccountController> logger, 
+        public AccountController(UserManager<ApplicationUser> userManager,
+                                  SignInManager<ApplicationUser> signInManager,
+                                  ILogger<AccountController> logger,
                                   CycloBitContext db,
-                                  IEmailService emailService) : base(userManager, signInManager, logger, db) {
-
-            this.EmailService = emailService;
-        }
+                                  IEmailService emailService) : base(userManager, signInManager, logger, db) => this.EmailService = emailService;
         #region Anonymous
 
         [HttpPost]
@@ -31,7 +27,6 @@ namespace CycloBit.Api.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] RegisterUserBindingModel model) {
-            
             if (model.Password != model.PasswordConf)
                 return BadRequest("Passwords must match.");
 

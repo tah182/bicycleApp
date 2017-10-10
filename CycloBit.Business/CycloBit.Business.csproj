@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>CycloBit.Business</AssemblyName>
+    <PackageId>CycloBit.Business</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CycloBit.Common\CycloBit.Common.csproj" />
+    <ProjectReference Include="..\CycloBit.Model\CycloBit.Model.csproj" />
+  </ItemGroup>
+
+</Project>

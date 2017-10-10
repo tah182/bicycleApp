@@ -32,5 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CycloBit.Common\CycloBit.Common.csproj" />
     <ProjectReference Include="..\CycloBit.Model\CycloBit.Model.csproj" />
+    <ProjectReference Include="..\CycloBit.Business\CycloBit.Business.csproj" />
   </ItemGroup>
 </Project>

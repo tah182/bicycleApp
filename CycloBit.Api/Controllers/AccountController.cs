@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -75,8 +76,8 @@ namespace CycloBit.Api.Controllers {
         [Route("forgotpassword")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword() {
-            return Ok();
+        public Task<IActionResult> ForgotPassword() {
+            throw new NotImplementedException();    // change method to async
         }
 
         #endregion

@@ -20,7 +20,7 @@ namespace CycloBit.Model.Entities {
 
         public int HeightCm { get; set; }
 
-        public int WeightKg { get; set; }
+        public double WeightKg { get; set; }
 
         public FeetInches FeetInches { 
             get {
@@ -31,9 +31,7 @@ namespace CycloBit.Model.Entities {
             }
         }
 
-        public double WeightLb {
-            get { return WeightKg.ConvertKgtoLb(); }
-        }
+        public double WeightLb => WeightKg.ConvertKgtoLb(); 
 
         public int? AgeYears { 
             get {

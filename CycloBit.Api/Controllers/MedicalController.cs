@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CycloBit.Api.Binding;
@@ -10,8 +12,8 @@ namespace CycloBit.Api.Controllers {
         public MedicalController(ILogger<AccountController> logger,
                                  CycloBitContext db) : base(logger, db) { }
 
-        public async IActionResult Post([FromBody] MedicalBindingModel model) {
-            return Ok();
+        public IActionResult Post([FromBody] MedicalBindingModel model) {
+            throw new NotImplementedException();   // make controller async
         }
     }
 }

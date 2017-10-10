@@ -95,7 +95,10 @@ namespace CycloBit.Api {
             // });
 
             // Third Party Authentication
-            services.AddAuthentication()
+            services.AddAuthentication(options => {
+                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;  
+                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+                    })
                     .AddJwtBearer(options => {
                         options.RequireHttpsMetadata = false;
                         options.SaveToken = true;
@@ -133,6 +136,7 @@ namespace CycloBit.Api {
 
             // Config section
             services.Configure<SmtpSettings>(Configuration.GetSection("SmsSettings"));
+            services.AddSingleton<IConfiguration>(Configuration);
 
             // AddMvc Must always be last in the pipeline
             services.AddMvc();

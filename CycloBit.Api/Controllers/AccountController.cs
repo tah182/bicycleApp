@@ -1,10 +1,15 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using CycloBit.Api.Binding;
+using CycloBit.Api.Configuration;
 using CycloBit.Api.Factory;
 using CycloBit.Api.Logging;
 using CycloBit.Api.Service;
@@ -15,12 +20,17 @@ namespace CycloBit.Api.Controllers {
     [Route("[controller]")]
     public class AccountController : BaseUserController<AccountController> {
         private readonly IEmailService EmailService;
+        private readonly IConfiguration Config;
 
         public AccountController(UserManager<ApplicationUser> userManager,
                                   SignInManager<ApplicationUser> signInManager,
                                   ILogger<AccountController> logger,
                                   CycloBitContext db,
-                                  IEmailService emailService) : base(userManager, signInManager, logger, db) => this.EmailService = emailService;
+                                  IEmailService emailService,
+                                  IConfiguration config) : base(userManager, signInManager, logger, db) {
+            this.EmailService = emailService;
+            this.Config = config;
+        }
         #region Anonymous
 
         [HttpPost]
@@ -57,7 +67,22 @@ namespace CycloBit.Api.Controllers {
             
             if (loginResult.Succeeded) {
                 this.Logger.LogInformation(LoggingEvents.Login, $"User logged in: {model.UserName}.");
-                return Ok();
+
+                var claims = new[] {
+                    new Claim(JwtRegisteredClaimNames.Sub, model.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+        
+                var key = JwtSecurityKey.Create(Config["Auth:Tokens:Key"]);
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        
+                var token = new JwtSecurityToken(Config["Auth:Tokens:Issuer"],
+                                                 Config["Auth:Tokens:Issuer"],
+                                                 claims,
+                                                 expires: DateTime.Now.AddMinutes(30),
+                                                 signingCredentials: creds);
+        
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
             }
             
             // if (loginResult.RequiresTwoFactor) {
@@ -91,5 +116,6 @@ namespace CycloBit.Api.Controllers {
             
             return Ok();
         }
+
     }
 }

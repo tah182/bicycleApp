@@ -10,8 +10,8 @@ namespace CycloBit.Api.Controllers
     [Authorize]
     public abstract class BaseUserController<T> : BaseController<T> {
         
-        protected readonly UserManager<ApplicationUser> UserManager;
-        protected readonly SignInManager<ApplicationUser> SignInManager;
+        protected UserManager<ApplicationUser> UserManager { get; private set;}
+        protected SignInManager<ApplicationUser> SignInManager { get; private set; }
 
         public BaseUserController (UserManager<ApplicationUser> userManager, 
                                    SignInManager<ApplicationUser> signInManager, 
@@ -21,5 +21,15 @@ namespace CycloBit.Api.Controllers
             this.SignInManager = signInManager;
         }
 
+        protected override void Dispose(bool disposing) {
+            if (!disposing) return;
+
+            if (this.UserManager != null) {
+                this.UserManager.Dispose();
+                this.UserManager = null;
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace CycloBit.Model.Entities {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public int ActivityId { get; set; }
+        [ForeignKey("ActivityId")]
         public virtual Activity Activity { get; set; }
         public TimeSpan Duration { 
             get => SegmentEnd - SegmentStart;

@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using CycloBit.Common.Objects;
 
 namespace CycloBit.Model.Entities {
-    [ComplexType]
     public class Address : Common.Objects.IAddress {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

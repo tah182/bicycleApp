@@ -11,7 +11,7 @@ using CycloBit.Model.Entities;
 namespace CycloBit.Api.Controllers {
     [Route("[controller]")]
     [Authorize]
-    public class MedicalController : BaseController<AccountController> {
+    public class MedicalController : BaseController<MedicalController> {
         private MedicalService medicalService = null;
         protected MedicalService MedicalService {
             get {
@@ -22,10 +22,10 @@ namespace CycloBit.Api.Controllers {
             }
         }
         
-        public MedicalController(ILogger<AccountController> logger,
+        public MedicalController(ILogger<MedicalController> logger,
                                  CycloBitContext db) : base(logger, db) { }
 
-        public IActionResult Get([FromBody] MedicalBindingModel model) {
+        public IActionResult Get() {
             throw new NotImplementedException();   // make controller async
         }
 

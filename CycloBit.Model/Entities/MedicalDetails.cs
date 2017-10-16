@@ -22,6 +22,7 @@ namespace CycloBit.Model.Entities {
 
         public double WeightKg { get; set; }
 
+        [NotMapped]
         public FeetInches FeetInches { 
             get {
                 if (feetInches == null)
@@ -31,8 +32,10 @@ namespace CycloBit.Model.Entities {
             }
         }
 
+        [NotMapped]
         public double WeightLb => WeightKg.ConvertKgtoLb(); 
 
+        [NotMapped]
         public int? AgeYears { 
             get {
                 if (this.IdentityUser.DateOfBirth == null) return null;

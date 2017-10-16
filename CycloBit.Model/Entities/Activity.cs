@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; 
 
 namespace CycloBit.Model.Entities {
     public class Activity {
-
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public DateTime Start { get; set; }

@@ -38,6 +38,11 @@ namespace CycloBit.Model
                    .HasForeignKey(e => e.UserId)
                    .IsRequired()
                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Activity>()
+                   .OwnsOne(e => e.StartCoordinates);
+            builder.Entity<Activity>()
+                   .OwnsOne(e => e.EndCoordinates);
         }
     }
 

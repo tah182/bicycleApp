@@ -2,9 +2,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using CycloBit.Common.Enums;
 
 namespace CycloBit.Model.Entities {
     public class ApplicationUser : IdentityUser {
+        private DateTime defaultCreateDate = DateTime.Today;
+
         [Required]
         [StringLength(100)]
         public string FirstName { get; set; }
@@ -22,8 +25,15 @@ namespace CycloBit.Model.Entities {
         [DataType(dataType: DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
+        public Gender Gender { get; set; }
+
         [DataType(dataType: DataType.Date)]
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { 
+            get { return defaultCreateDate; }
+            set { this.defaultCreateDate = value; }
+        }
+
+        public virtual ICollection<Location> SavedLocations { get; } = new List<Location>();
 
         /// <summary>
         /// Navigation property for the roles this user belongs to.

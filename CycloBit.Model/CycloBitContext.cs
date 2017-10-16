@@ -11,6 +11,10 @@ namespace CycloBit.Model
         public CycloBitContext(DbContextOptions<CycloBitContext> options) : base(options) { }
         
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<MedicalDetail> MedicalDetails { get; set; }
+        public DbSet<Segment> Segments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             builder.HasDefaultSchema("CycloBit");
@@ -39,10 +43,16 @@ namespace CycloBit.Model
                    .IsRequired()
                    .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Address>()
+                   .OwnsOne(e => e.Coordinate);
+
             builder.Entity<Activity>()
                    .OwnsOne(e => e.StartCoordinates);
             builder.Entity<Activity>()
                    .OwnsOne(e => e.EndCoordinates);
+
+            builder.Entity<Segment>()
+                   .OwnsOne(e => e.ActivityHealth);
         }
     }
 

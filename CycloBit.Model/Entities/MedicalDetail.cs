@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using CycloBit.Common.Conversion;
 
 namespace CycloBit.Model.Entities {
-    public class MedicalDetials {
+    public class MedicalDetail {
         private FeetInches feetInches = null;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

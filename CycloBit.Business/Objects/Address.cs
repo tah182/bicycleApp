@@ -11,7 +11,7 @@ namespace CycloBit.Business.Objects {
     }
 
     public static partial class ExtensionMethods {
-        public static IAddress ToViewModel(this Model.Entities.Address address) {
+        public static Address ToViewModel(this Model.Entities.Address address) {
             return new Address {
                 HouseNumber = address.HouseNumber,
                 StreetAddress = address.StreetAddress,

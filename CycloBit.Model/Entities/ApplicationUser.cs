@@ -25,7 +25,7 @@ namespace CycloBit.Model.Entities {
         [DataType(dataType: DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
-        public Gender Gender { get; set; }
+        public Gender Gender { get; set; } = Gender.Unknown;
 
         [DataType(dataType: DataType.Date)]
         public DateTime CreateDate { 

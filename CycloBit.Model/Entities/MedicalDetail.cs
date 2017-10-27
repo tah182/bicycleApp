@@ -19,22 +19,24 @@ namespace CycloBit.Model.Entities {
         [ForeignKey("IdentityUserId")]
         public ApplicationUser IdentityUser { get; set; }
 
-        public int HeightCm { get; set; }
+        public int? HeightCm { get; set; }
 
-        public double WeightKg { get; set; }
+        public double? WeightKg { get; set; }
 
         [NotMapped]
-        public FeetInches FeetInches { 
+        public FeetInches HeightFeet { 
             get {
+                if (HeightCm == null) return null;
+
                 if (feetInches == null)
-                    feetInches = new FeetInches(HeightCm.ConvertCentimetersToInches());
+                    feetInches = new FeetInches(HeightCm.ConvertCentimetersToInches().Value);
 
                 return feetInches;
             }
         }
 
         [NotMapped]
-        public double WeightLb => WeightKg.ConvertKgtoLb(); 
+        public double? WeightLb => WeightKg.ConvertKgtoLb(); 
 
         [NotMapped]
         public DateTime? DateOfBirth { 

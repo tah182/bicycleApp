@@ -36,7 +36,6 @@ namespace CycloBit.Api.Controllers {
         }
 
         [HttpGet]
-        [ResponseType(typeof(IMedicalDetail))]
         public async Task<IActionResult> Get(bool empirical = false) {
             var user = await this.UserManager.GetUserAsync(this.User);
             var medicalDetail = await this.MedicalService.GetAsync(user.Id);
@@ -45,19 +44,16 @@ namespace CycloBit.Api.Controllers {
         }
 
         [HttpPost]
-        [ResponseType(typeof(bool))]
         public IActionResult Post(MedicalBindingModel model) {
             throw new NotImplementedException();   // make controller async
         }
 
         [HttpPut]
-        [ResponseType(typeof(bool))]
         public IActionResult Put(MedicalBindingModel model) {
             throw new NotImplementedException();   // make controller async
         }
 
         [HttpDelete]
-        [ResponseType(typeof(bool))]
         public IActionResult Delete() {
             return NotFound();
         }

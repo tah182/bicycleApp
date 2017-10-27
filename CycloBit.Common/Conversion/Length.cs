@@ -9,8 +9,9 @@ namespace CycloBit.Common.Conversion {
         ///</summary>
         ///<param name="inches">(int)</param>
         ///<returns>Returns centimeters rounded to nearest integer.</returns>
-        public static int ConvertInchesToCentimeters(this int inches) {
-            FeetInches feetInches = new FeetInches(inches);
+        public static int? ConvertInchesToCentimeters(this int? inches) {
+            if (inches == null) return null;
+            FeetInches feetInches = new FeetInches(inches.Value);
             return feetInches.ToCentimeters();
         }
 
@@ -19,8 +20,9 @@ namespace CycloBit.Common.Conversion {
         ///</summary>
         ///<param name="centimeters">(int)</param>
         ///<returns>Returns inches rounded to nearest integer.</returns>
-        public static int ConvertCentimetersToInches(this int centimeters) {
-            var inches = Math.Round(centimeters / 2.54, 0);
+        public static int? ConvertCentimetersToInches(this int? centimeters) {
+            if (centimeters == null) return null;
+            var inches = Math.Round(centimeters.Value / 2.54, 0);
             return Convert.ToInt32(inches);
         }
 

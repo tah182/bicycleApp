@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CycloBit.Api.Binding;
-using CycloBit.Business.Objects;
 using CycloBit.Model;
 
 namespace CycloBit.Api.Controllers {

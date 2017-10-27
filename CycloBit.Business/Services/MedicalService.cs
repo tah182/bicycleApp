@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using CycloBit.Model;
 using CycloBit.Model.Entities;
 
@@ -18,8 +19,8 @@ namespace CycloBit.Business.Services {
             return db.MedicalDetails;
         }
 
-        public async Task<IEnumerable<MedicalDetail> GetAsync() {
-            return await db.MedicalDetails.AsEnumerableAsync();
+        public async Task<IEnumerable<MedicalDetail>> GetAsync() {
+            return await db.MedicalDetails.ToListAsync();
         }
 
         public async Task<MedicalDetail> GetAsync(string userId) {

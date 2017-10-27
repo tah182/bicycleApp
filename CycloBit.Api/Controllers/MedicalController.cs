@@ -49,7 +49,10 @@ namespace CycloBit.Api.Controllers {
             var updatedDetail = convertBindingToEntity(model, user);
 
             await this.MedicalService.UpdateAsync(updatedDetail);
-            return Ok();
+            user.DateOfBirth = model.DateOfBirth;
+            var result = await this.UserManager.UpdateAsync(user);
+
+            return Ok(result.Succeeded);
         }
 
         [HttpPut]
@@ -58,7 +61,10 @@ namespace CycloBit.Api.Controllers {
             var newDetail = convertBindingToEntity(model, user);
 
             await this.MedicalService.AddAsync(newDetail);
-            return Ok();
+            user.DateOfBirth = model.DateOfBirth;
+            var result = await this.UserManager.UpdateAsync(user);
+
+            return Ok(result.Succeeded);
         }
 
         [HttpDelete]

@@ -3,9 +3,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using CycloBit.Common.Conversion;
+using CycloBit.Common.Objects;
 
 namespace CycloBit.Model.Entities {
-    public class MedicalDetail {
+    public class MedicalDetail : IMedicalDetail {
         private FeetInches feetInches = null;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,6 +35,11 @@ namespace CycloBit.Model.Entities {
 
         [NotMapped]
         public double WeightLb => WeightKg.ConvertKgtoLb(); 
+
+        [NotMapped]
+        public DateTime? DateOfBirth { 
+            get { return this.IdentityUser.DateOfBirth; }
+        }
 
         [NotMapped]
         public int? AgeYears { 

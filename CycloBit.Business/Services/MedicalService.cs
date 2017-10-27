@@ -24,7 +24,20 @@ namespace CycloBit.Business.Services {
         }
 
         public async Task<MedicalDetail> GetAsync(string userId) {
-            return await db.MedicalDetails.Where(md => md.IdentityUserId == userId).SingleAsync();
+            return await db.MedicalDetails.Where(md => md.IdentityUserId == userId).SingleOrDefaultAsync();
+        }
+        
+        public async Task AddAsync(MedicalDetail medicalDetail) {
+            await db.MedicalDetails.AddAsync(medicalDetail);
+            await db.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(MedicalDetail newDetail) {
+            var oldDetail = await GetAsync(newDetail.IdentityUserId);
+            oldDetail.HeightCm      = newDetail.HeightCm;
+            oldDetail.WeightKg      = newDetail.WeightKg;
+            
+            await db.SaveChangesAsync();
         }
 
         public void Dispose() {

@@ -36,26 +36,46 @@ namespace CycloBit.Api.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(bool empirical = false) {
-            var user = await this.UserManager.GetUserAsync(this.User);
+        public async Task<IActionResult> Get() {
+            var user = await currentUser();
             var medicalDetail = await this.MedicalService.GetAsync(user.Id);
             
             return Ok((IMedicalDetail)medicalDetail);
         }
 
         [HttpPost]
-        public IActionResult Post(MedicalBindingModel model) {
-            throw new NotImplementedException();   // make controller async
+        public async Task<IActionResult> Post(MedicalBindingModel model) {
+            var user = await this.UserManager.GetUserAsync(this.User);
+            var updatedDetail = convertBindingToEntity(model, user);
+
+            await this.MedicalService.UpdateAsync(updatedDetail);
+            return Ok();
         }
 
         [HttpPut]
-        public IActionResult Put(MedicalBindingModel model) {
-            throw new NotImplementedException();   // make controller async
+        public async Task<IActionResult> Put(MedicalBindingModel model) {
+            var user = await currentUser();
+            var newDetail = convertBindingToEntity(model, user);
+
+            await this.MedicalService.AddAsync(newDetail);
+            return Ok();
         }
 
         [HttpDelete]
         public IActionResult Delete() {
             return NotFound();
+        }
+
+        private async Task<ApplicationUser> currentUser() {
+            return await this.UserManager.GetUserAsync(this.User);
+        }
+
+        private MedicalDetail convertBindingToEntity(MedicalBindingModel model, ApplicationUser user) {
+            return new MedicalDetail {
+                IdentityUserId = user.Id,
+                HeightCm = model.HeightCm,
+                WeightKg = model.WeightKg
+            };
         }
 
         protected override void Dispose(bool disposing) {

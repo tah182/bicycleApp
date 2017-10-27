@@ -36,12 +36,10 @@ namespace CycloBit.Model.Entities {
         }
 
         [NotMapped]
-        public double? WeightLb => WeightKg.ConvertKgtoLb(); 
+        public int? WeightLb => WeightKg.ConvertKgtoLb(); 
 
         [NotMapped]
-        public DateTime? DateOfBirth { 
-            get { return this.IdentityUser.DateOfBirth; }
-        }
+        public DateTime? DateOfBirth => this.IdentityUser.DateOfBirth;
 
         [NotMapped]
         public int? AgeYears { 

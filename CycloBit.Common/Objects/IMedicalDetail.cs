@@ -5,7 +5,7 @@ namespace CycloBit.Common.Objects {
         int? HeightCm { get; set; }
         double? WeightKg { get; set; }
         FeetInches HeightFeet { get; }
-        double? WeightLb { get; }
+        int? WeightLb { get; }
         DateTime? DateOfBirth { get; }
         int? AgeYears { get; }
     }

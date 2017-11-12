@@ -33,10 +33,8 @@ namespace CycloBit.Api.Controllers {
         }
         #region Anonymous
 
-        [HttpPost]
-        [Route("register")]
+        [Route("register"), HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] RegisterUserBindingModel model) {
             if (model.Password != model.PasswordConf)
                 return BadRequest("Passwords must match.");
@@ -58,10 +56,14 @@ namespace CycloBit.Api.Controllers {
             return BadRequest("Unable to create account, please try again.");
         }
 
-        [HttpPost]
-        [Route("login")]
+        [Route("test"), HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        public IActionResult Test([FromBody] string value) {
+            return Ok(value);
+        }
+
+        [Route("login"), HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginUserBindingModel model) {
             var loginResult = await this.SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
             
@@ -97,8 +99,7 @@ namespace CycloBit.Api.Controllers {
             return Unauthorized();
         }
 
-        [HttpPost]
-        [Route("forgotpassword")]
+        [Route("forgotpassword"), HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public Task<IActionResult> ForgotPassword() {
@@ -107,8 +108,7 @@ namespace CycloBit.Api.Controllers {
 
         #endregion
 
-        [HttpPost]
-        [Route("logout")]
+        [Route("logout"), HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout() {
             await this.SignInManager.SignOutAsync();

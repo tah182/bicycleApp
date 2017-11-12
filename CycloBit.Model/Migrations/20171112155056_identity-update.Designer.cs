@@ -12,9 +12,10 @@ using System;
 namespace CycloBit.Model.Migrations
 {
     [DbContext(typeof(CycloBitContext))]
-    partial class BicycleContextModelSnapshot : ModelSnapshot
+    [Migration("20171112155056_identity-update")]
+    partial class identityupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

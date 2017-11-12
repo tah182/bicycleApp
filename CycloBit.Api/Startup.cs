@@ -18,6 +18,7 @@ using CycloBit.Api.Configuration;
 using CycloBit.Api.Service;
 using CycloBit.Model;
 using CycloBit.Model.Entities;
+using Newtonsoft.Json.Serialization;
 
 namespace CycloBit.Api {
     public class Startup {
@@ -37,12 +38,14 @@ namespace CycloBit.Api {
         }
 
         public void ConfigureDevelopmentServices(IServiceCollection services) {
+            services.AddDbContext<CycloBitContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IEmailService, SmtpService>();
 
             ConfigureCommonServices(services);
         }
 
         public void ConfigureProductionServices(IServiceCollection services) {
+            services.AddDbContext<CycloBitContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IEmailService, SendGridService>();
 
             ConfigureCommonServices(services);

@@ -10,6 +10,16 @@
                 "${workspaceFolder}/BicycleApi/BicycleApi.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "build - test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/testauth/testauth.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

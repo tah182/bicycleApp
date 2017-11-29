@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using testauth.Data;
 using testauth.Models;
 using testauth.Services;
+using System.IO;
 
 namespace testauth
 {
@@ -18,7 +19,12 @@ namespace testauth
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            Configuration = builder.Build();
+            //Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -63,6 +69,23 @@ namespace testauth
                 options.SlidingExpiration = true;
             });
             
+            // Third Party Authentication
+            services.AddAuthentication()
+                    .AddFacebook(options => {
+                        options.AppId = Configuration["Auth:Facebook:AppId"];
+                        options.AppSecret = Configuration["Auth:Facebook:AppSecret"];
+                        // options.Fields = ["birthday", "email", "first_name", "last_name", "gender", "name_format", "picture"];
+                    })
+                    .AddGoogle(options => {
+                        options.ClientId = Configuration["Auth:Google:ClientId"];
+                        options.ClientSecret = Configuration["Auth:Google:ClientSecret"];
+                    })
+                    .AddTwitter(options => {
+                        options.ConsumerKey = Configuration["Auth:Twitter:ConsumerKey"];
+                        options.ConsumerSecret = Configuration["Auth:Twitter:ConsumerSecret"];
+                    });
+
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
